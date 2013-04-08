@@ -7,7 +7,7 @@ void testApp::setup(){
 	ofSetLogLevel(OF_LOG_VERBOSE);
 	ofBackground(0);
     ofSetFrameRate(60);
-
+	ofEnableAlphaBlending();
 	
 	if(	spi.connect())
 	{
@@ -46,7 +46,7 @@ void testApp::update(){
 			ofLogNotice("OSC") << " Set LED length as " << numLED;
 			}
 		}
-		if(m.getAddress() == "/settings/framerate"){
+		else if(m.getAddress() == "/settings/framerate"){
 			framerate = m.getArgAsInt32(0);
 			
 		}
@@ -60,6 +60,7 @@ void testApp::update(){
 			int prev = current;
 			current = next;
 			next = prev;
+			
 			string folder = m.getArgAsString(0);
 			sequence[next].unloadSequence();
 			sequence[next].loadSequence(folder);
@@ -118,7 +119,7 @@ void testApp::update(){
 	{
 		led->renderBuffer.begin();
 		//drawing stuff
-		ofSetColor(255);
+//		ofSetColor(255);
 		int width = led->renderBuffer.getWidth();
 		int height = led->renderBuffer.getHeight();
 		if(sequence[current].isLoaded())sequence[current].getFrameAtPercent(sequenceTime[current].getCurrentValue())->draw(0,0,width,height);
