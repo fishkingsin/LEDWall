@@ -119,7 +119,7 @@ void testApp::update(){
 	{
 		led->renderBuffer.begin();
 		//drawing stuff
-//		ofSetColor(255);
+		ofSetColor(255);
 		int width = led->renderBuffer.getWidth();
 		int height = led->renderBuffer.getHeight();
 		if(sequence[current].isLoaded())sequence[current].getFrameAtPercent(sequenceTime[current].getCurrentValue())->draw(0,0,width,height);
@@ -127,7 +127,7 @@ void testApp::update(){
 		if(sequence[next].isLoaded())sequence[next].getFrameAtPercent(sequenceTime[next].getCurrentValue())->draw(0,0,width,height);
 		led->renderBuffer.end();
 		led->encode();
-#define DEBUG
+//#define DEBUG
 #ifdef DEBUG
 		cout << "------------------------------------------" << endl;
 		for(int i = 0 ; i< led->txBuffer.size() ;i++)
