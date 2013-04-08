@@ -128,7 +128,7 @@ void testApp::update(){
 		led->renderBuffer.end();
 		led->encode();
 #define DEBUG
-#ifdef DEUBG
+#ifdef DEBUG
 		cout << "------------------------------------------" << endl;
 		for(int i = 0 ; i< led->txBuffer.size() ;i++)
 		{
