@@ -1,0 +1,56 @@
+<DATA>
+    <DEVICE>
+        <HOST>127.0.0.1</HOST>
+        <PORT>2838</PORT>
+    </DEVICE><!-- 
+    <DEVICE>
+        <HOST>127.0.0.1</HOST>
+        <PORT>2838</PORT>
+    </DEVICE>
+    <DEVICE>
+        <HOST>127.0.0.1</HOST>
+        <PORT>2838</PORT>
+    </DEVICE>
+    <DEVICE>
+        <HOST>127.0.0.1</HOST>
+        <PORT>2838</PORT>
+    </DEVICE>
+    <DEVICE>
+        <HOST>127.0.0.1</HOST>
+        <PORT>2838</PORT>
+    </DEVICE> -->
+    <CUES>
+        <CUE>
+            <FILE>./rainbow/</FILE>
+            <TRANSITION_DURATION>2</TRANSITION_DURATION>
+            <EASING>0</EASING>
+            <DEVICES>
+                <ID>0</ID>
+                <!-- <ID>1</ID>
+                <ID>2</ID>
+                <ID>3</ID>
+                <ID>4</ID> -->
+            </DEVICES>
+            <DURATION>10</DURATION>
+        </CUE>
+        <CUE>
+            <FILE>./rainbow/</FILE>
+            <TRANSITION_DURATION>1</TRANSITION_DURATION>
+            <EASING>0</EASING>
+            <DEVICES>
+                <ID>0</ID>
+                <!-- <ID>1</ID>
+                <ID>2</ID>
+                <ID>3</ID>
+                <ID>4</ID> -->
+            </DEVICES>
+            <DURATION>5</DURATION>
+        </CUE>
+        <CUE>
+        </CUE>
+        <CUE>
+        </CUE>
+        <CUE>
+        </CUE>
+    </CUES>
+</DATA>
