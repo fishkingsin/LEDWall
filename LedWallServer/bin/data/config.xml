@@ -2,12 +2,12 @@
     <DEVICE>
         <HOST>127.0.0.1</HOST>
         <PORT>2838</PORT>
-        <LENGTH>80</LENGTH>
+        <LENGTH>5</LENGTH>
     </DEVICE> 
     <DEVICE>
         <HOST>192.168.6.86</HOST>
         <PORT>2838</PORT>
-        <LENGTH>160</LENGTH>
+        <LENGTH>32</LENGTH>
     </DEVICE><!--
     <DEVICE>
         <HOST>127.0.0.1</HOST>

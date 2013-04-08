@@ -127,8 +127,24 @@ void testApp::update(){
 		if(sequence[next].isLoaded())sequence[next].getFrameAtPercent(sequenceTime[next].getCurrentValue())->draw(0,0,width,height);
 		led->renderBuffer.end();
 		led->encode();
+#define DEBUG
+#ifdef DEUBG
+		cout << "------------------------------------------" << endl;
+		for(int i = 0 ; i< led->txBuffer.size() ;i++)
+		{
+			if(i>3 && i <led->txBuffer.size()-1)
+			{
+				cout << int(led->txBuffer[i]) << " | ";
+				if(((i+4)%12)==0)
+					cout << endl;
+			}
+		}
+		cout << "------------------------------------------" << endl;
+#endif
 		//	sending stuff
+		
 		spi.send(led->txBuffer);
+		
 	}
 	
 	
