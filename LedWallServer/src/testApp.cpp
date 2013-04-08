@@ -2,40 +2,40 @@
 
 //--------------------------------------------------------------
 void testApp::setup(){
-//	xml.addTag("DATA");
-//	if(xml.pushTag("DATA"))
-//	{
-//		
-//		
-//		for(int i = 0 ; i < 5 ; i++)
-//		{
-//			xml.addTag("DEVICE");
-//			if(xml.pushTag("DEVICE",i))
-//			{
-//				xml.addValue("HOST", "127.0.0.1");
-//				xml.addValue("PORT", 2838);
-//				xml.popTag();
-//			}
-//		}
-//		xml.popTag();
-//	}
-//	xml.saveFile("config.xml");
+	//	xml.addTag("DATA");
+	//	if(xml.pushTag("DATA"))
+	//	{
+	//
+	//
+	//		for(int i = 0 ; i < 5 ; i++)
+	//		{
+	//			xml.addTag("DEVICE");
+	//			if(xml.pushTag("DEVICE",i))
+	//			{
+	//				xml.addValue("HOST", "127.0.0.1");
+	//				xml.addValue("PORT", 2838);
+	//				xml.popTag();
+	//			}
+	//		}
+	//		xml.popTag();
+	//	}
+	//	xml.saveFile("config.xml");
 	ofSetLogLevel(OF_LOG_VERBOSE);
 	if(xml.loadFile("config.xml"))
 	{
 		xml.pushTag("DATA");
-			numDevice = xml.getNumTags("DEVICE");
+		numDevice = xml.getNumTags("DEVICE");
 		ofLogVerbose("numDevice") << numDevice;
-			sender = new ofxOscSender[numDevice];
-			for(int i = 0 ; i < numDevice ; i++)
+		sender = new ofxOscSender[numDevice];
+		for(int i = 0 ; i < numDevice ; i++)
+		{
+			if(xml.pushTag("DEVICE",i))
 			{
-				if(xml.pushTag("DEVICE",i))
-				{
-					sender[i].setup(xml.getValue("HOST", "127.0.0.1"), xml.getValue("PORT", 2838));
-					xml.popTag();
-				}
+				sender[i].setup(xml.getValue("HOST", "127.0.0.1"), xml.getValue("PORT", 2838));
+				xml.popTag();
 			}
-//			xml.popTag();
+		}
+		//			xml.popTag();
 		
 	}
 	keyPressed(OF_KEY_RETURN);
@@ -48,7 +48,7 @@ void testApp::update(){
 
 //--------------------------------------------------------------
 void testApp::draw(){
-
+	
 }
 
 //--------------------------------------------------------------
@@ -57,18 +57,22 @@ void testApp::keyPressed(int key){
 	{
 		case OF_KEY_RETURN:
 		{
-			ofxOscBundle b;
-			
-			ofxOscMessage m;
-			m.setAddress("/settings/length");
-			
-			m.addIntArg(160);
-			b.addMessage(m);
-			
 			for(int i = 0 ; i < numDevice ; i++)
 			{
-				
-				sender[i].sendBundle(b);
+				if(xml.pushTag("DEVICE",i))
+				{
+					ofxOscBundle b;
+					
+					ofxOscMessage m;
+					m.setAddress("/settings/length");
+					
+					m.addIntArg(xml.getValue("LENGTH", 32));
+					b.addMessage(m);
+					
+					
+					sender[i].sendBundle(b);
+				}
+				xml.popTag();
 			}
 		}
 			break;
@@ -84,18 +88,18 @@ void testApp::keyPressed(int key){
 			
 			ofxOscMessage m;
 			m.setAddress("/settings/debug");
-
+			
 			m.addIntArg(1);
 			b.addMessage(m);
-
+			
 			for(int i = 0 ; i < numDevice ; i++)
 			{
 				
-					sender[i].sendBundle(b);
+				sender[i].sendBundle(b);
 			}
 		}
 			break;
-				
+			
 	}
 }
 void testApp::parseCue(int cue)
@@ -117,7 +121,7 @@ void testApp::parseCue(int cue)
 			m.addIntArg(xml.getValue("EASING", 0));
 			m.addIntArg(xml.getValue("DURATION", 0));
 			b.addMessage(m);
-;
+			;
 			if(xml.pushTag("DEVICES"))
 			{
 				int numTag = xml.getNumTags("ID");
@@ -140,40 +144,40 @@ void testApp::parseCue(int cue)
 }
 //--------------------------------------------------------------
 void testApp::keyReleased(int key){
-
+	
 }
 
 //--------------------------------------------------------------
 void testApp::mouseMoved(int x, int y ){
-
+	
 }
 
 //--------------------------------------------------------------
 void testApp::mouseDragged(int x, int y, int button){
-
+	
 }
 
 //--------------------------------------------------------------
 void testApp::mousePressed(int x, int y, int button){
-
+	
 }
 
 //--------------------------------------------------------------
 void testApp::mouseReleased(int x, int y, int button){
-
+	
 }
 
 //--------------------------------------------------------------
 void testApp::windowResized(int w, int h){
-
+	
 }
 
 //--------------------------------------------------------------
 void testApp::gotMessage(ofMessage msg){
-
+	
 }
 
 //--------------------------------------------------------------
-void testApp::dragEvent(ofDragInfo dragInfo){ 
-
+void testApp::dragEvent(ofDragInfo dragInfo){
+	
 }
