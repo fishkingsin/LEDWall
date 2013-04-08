@@ -25,6 +25,7 @@ void testApp::setup(){
 	{
 		xml.pushTag("DATA");
 			numDevice = xml.getNumTags("DEVICE");
+		ofLogVerbose("numDevice") << numDevice;
 			sender = new ofxOscSender[numDevice];
 			for(int i = 0 ; i < numDevice ; i++)
 			{
@@ -122,11 +123,11 @@ void testApp::parseCue(int cue)
 				int numTag = xml.getNumTags("ID");
 				for(int i = 0 ; i < numTag ; i++)
 				{
-					int id = xml.getValue("ID",-1);
-					if(id<numDevice && id-1)
+					int id = xml.getValue("ID",0,i);
+					if(id<numDevice && id>-1)
 					{
 						sender[id].sendBundle(b);
-						ofLogVerbose("Device"+ofToString(id)) << "sent";
+						ofLogVerbose("Device "+ofToString(id)) << "sent";
 					}
 				}
 				xml.popTag();

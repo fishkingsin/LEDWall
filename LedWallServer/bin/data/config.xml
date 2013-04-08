@@ -2,11 +2,11 @@
     <DEVICE>
         <HOST>127.0.0.1</HOST>
         <PORT>2838</PORT>
-    </DEVICE><!-- 
+    </DEVICE> 
     <DEVICE>
-        <HOST>127.0.0.1</HOST>
+        <HOST>192.168.6.86</HOST>
         <PORT>2838</PORT>
-    </DEVICE>
+    </DEVICE><!--
     <DEVICE>
         <HOST>127.0.0.1</HOST>
         <PORT>2838</PORT>
@@ -26,6 +26,7 @@
             <EASING>0</EASING>
             <DEVICES>
                 <ID>0</ID>
+                 <ID>1</ID>
                 <!-- <ID>1</ID>
                 <ID>2</ID>
                 <ID>3</ID>
@@ -39,6 +40,7 @@
             <EASING>0</EASING>
             <DEVICES>
                 <ID>0</ID>
+                <ID>1</ID>
                 <!-- <ID>1</ID>
                 <ID>2</ID>
                 <ID>3</ID>
