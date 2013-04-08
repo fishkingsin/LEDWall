@@ -22,7 +22,7 @@ void testApp::exit()
 {
 	if(led!=NULL)
 	{
-		led->clear(0);
+		led->clear(ofColor(0));
 		
 		spi.send(led->txBuffer);
 	}
