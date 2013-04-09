@@ -31,4 +31,6 @@ class testApp : public ofBaseApp{
 	ofxXmlSettings xml;
 	int numDevice;
 	void parseCue(int cue);
+	void  initClient();
+	bool bDebug;
 };

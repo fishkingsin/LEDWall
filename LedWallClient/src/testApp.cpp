@@ -119,12 +119,17 @@ void testApp::update(){
 	{
 		led->renderBuffer.begin();
 		//drawing stuff
-		ofSetColor(255);
+		ofPushStyle();
+		ofSetColor(255,255);
 		int width = led->renderBuffer.getWidth();
 		int height = led->renderBuffer.getHeight();
 		if(sequence[current].isLoaded())sequence[current].getFrameAtPercent(sequenceTime[current].getCurrentValue())->draw(0,0,width,height);
+		ofPopStyle();
+		ofPushStyle();
+		
 		ofSetColor(255,animation.getCurrentValue());
 		if(sequence[next].isLoaded())sequence[next].getFrameAtPercent(sequenceTime[next].getCurrentValue())->draw(0,0,width,height);
+		ofPopStyle();
 		led->renderBuffer.end();
 		led->encode();
 //#define DEBUG

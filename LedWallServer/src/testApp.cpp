@@ -50,30 +50,33 @@ void testApp::update(){
 void testApp::draw(){
 	
 }
-
+void testApp::initClient()
+{
+	for(int i = 0 ; i < numDevice ; i++)
+	{
+		if(xml.pushTag("DEVICE",i))
+		{
+			ofxOscBundle b;
+			
+			ofxOscMessage m;
+			m.setAddress("/settings/length");
+			
+			m.addIntArg(xml.getValue("LENGTH", 32));
+			b.addMessage(m);
+			
+			
+			sender[i].sendBundle(b);
+		}
+		xml.popTag();
+	}
+}
 //--------------------------------------------------------------
 void testApp::keyPressed(int key){
 	switch(key)
 	{
 		case OF_KEY_RETURN:
 		{
-			for(int i = 0 ; i < numDevice ; i++)
-			{
-				if(xml.pushTag("DEVICE",i))
-				{
-					ofxOscBundle b;
-					
-					ofxOscMessage m;
-					m.setAddress("/settings/length");
-					
-					m.addIntArg(xml.getValue("LENGTH", 32));
-					b.addMessage(m);
-					
-					
-					sender[i].sendBundle(b);
-				}
-				xml.popTag();
-			}
+			initClient();
 		}
 			break;
 		case '1':
@@ -84,12 +87,13 @@ void testApp::keyPressed(int key){
 			break;
 		case 'd':
 		{
+			bDebug = !bDebug;
 			ofxOscBundle b;
 			
 			ofxOscMessage m;
 			m.setAddress("/settings/debug");
 			
-			m.addIntArg(1);
+			m.addIntArg(bDebug);
 			b.addMessage(m);
 			
 			for(int i = 0 ; i < numDevice ; i++)
@@ -104,6 +108,8 @@ void testApp::keyPressed(int key){
 }
 void testApp::parseCue(int cue)
 {
+	initClient();
+//	keyPressed(OF_KEY_RETURN);
 	if(xml.pushTag("CUES"))
 	{
 		if(xml.pushTag("CUE",cue))
