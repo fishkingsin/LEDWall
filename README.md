@@ -30,10 +30,13 @@ Dependencies
 ofxOsc
 ofxXmlSettings
 
-https://github.com/Flightphase/ofxImageSequence
-https://github.com/armadillu/ofxAnimatable
-https://github.com/fishkingsin/ofxLEDs
-https://github.com/fishkingsin/ofxLPD8806
+[ofxImageSequence](https://github.com/Flightphase/ofxImageSequence)
+
+[ofxAnimatable](https://github.com/armadillu/ofxAnimatable)
+
+[ofxLEDs](https://github.com/fishkingsin/ofxLEDs)
+
+[ofxLPD8806](https://github.com/fishkingsin/ofxLPD8806)
 
 
 
