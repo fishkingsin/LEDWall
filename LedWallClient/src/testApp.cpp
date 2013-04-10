@@ -3,7 +3,16 @@
 //--------------------------------------------------------------
 void testApp::setup(){
 	led = NULL;
-	receiver.setup(2838);
+	ofxXmlSettings xml;
+	int port = 2838;
+	if(xml.loadFile("config.xml"))
+	{
+		xml.pushTag("DATA");
+		port = xml.getValue("PORT",2838);
+		xml.popTag();
+		
+	}
+	receiver.setup(port);
 	ofSetLogLevel(OF_LOG_VERBOSE);
 	ofBackground(0);
     ofSetFrameRate(60);
@@ -56,12 +65,14 @@ void testApp::update(){
 			//arg 1: transition duration
 			//arg 2: curve
 			//arg 3: animation duration
+			//arg 4: loop
 			
 			int prev = current;
 			current = next;
 			next = prev;
 			
 			string folder = m.getArgAsString(0);
+
 			sequence[next].unloadSequence();
 			sequence[next].loadSequence(folder);
 			sequence[next].setFrameRate(framerate);
@@ -76,7 +87,8 @@ void testApp::update(){
 			int animationDur = m.getArgAsInt32(3);
 			ofLogVerbose("Animation") << animationDur;
 			sequenceTime[next].setDuration(animationDur);
-			sequenceTime[next].setRepeatType( PLAY_ONCE );
+			isLoop = m.getArgAsInt32(4);
+			sequenceTime[next].setRepeatType( (isLoop)?LOOP:PLAY_ONCE );
 			sequenceTime[next].setCurve(LINEAR);
 		}
 		

@@ -7,6 +7,7 @@
 #include "ofxOsc.h"
 #include "ofxLEDsLPD8806.h"
 #include "ofxLPD8806.h"
+#include "ofxXmlSettings.h"
 class testApp : public ofBaseApp{
 
 	public:
@@ -32,6 +33,8 @@ class testApp : public ofBaseApp{
 	ofxAnimatableFloat animation;
 	ofxAnimatableFloat sequenceTime[2];
 	ofxImageSequence sequence[2];
+	
+	bool isLoop;
 	
 	int current,next;
 	int numLED;
