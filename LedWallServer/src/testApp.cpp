@@ -126,6 +126,7 @@ void testApp::parseCue(int cue)
 			m.addIntArg(xml.getValue("TRANSITION_DURATION", 1));
 			m.addIntArg(xml.getValue("EASING", 0));
 			m.addIntArg(xml.getValue("DURATION", 0));
+			m.addIntArg(xml.getValue("LOOP", 0));
 			b.addMessage(m);
 			;
 			if(xml.pushTag("DEVICES"))
