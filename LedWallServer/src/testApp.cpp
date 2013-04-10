@@ -21,6 +21,8 @@ void testApp::setup(){
 	//	}
 	//	xml.saveFile("config.xml");
 	ofSetLogLevel(OF_LOG_VERBOSE);
+	deviceName = "/dev/ttyUSB0" ;
+	baudrate = 9600;
 	if(xml.loadFile("config.xml"))
 	{
 		xml.pushTag("DATA");
@@ -34,16 +36,54 @@ void testApp::setup(){
 				sender[i].setup(xml.getValue("HOST", "127.0.0.1"), xml.getValue("PORT", 2838));
 				xml.popTag();
 			}
+			if(xml.pushTag("SERIAL"))
+			{
+				deviceName = xml.getValue("NAME", "/dev/ttyUSB0");
+				baudrate = xml.getValue("BAUDRATE", 9600);
+				xml.popTag();
+			}
 		}
 		//			xml.popTag();
 		
 	}
+	bSerialInited = serial.setup(deviceName, baudrate);
+	if(!bSerialInited)
+	{
+		ofLogError("Serial") << "Device Name may not corret "<< endl << "Use \"ls /dev/tty*\" to checkyour available rs232 device";
+	}
+	
+	timeConunt = 0;
 	keyPressed(OF_KEY_RETURN);
 }
 
 //--------------------------------------------------------------
 void testApp::update(){
-	
+	if(bSerialInited)
+	{
+		if(serial.available())
+		{
+			unsigned char bytesReturned[1];
+			
+			
+			while( serial.readBytes( bytesReturned, 1) > 0){
+				ofLogVerbose("Serial") << "bytesReturned : " <<bytesReturned[0];
+			};
+		}
+	}
+	else
+	{
+		int diff = ofGetElapsedTimeMillis() - timeConunt;
+		if(diff>5000)
+		{
+			bSerialInited = serial.setup(deviceName, baudrate);
+			if(!bSerialInited)
+			{
+				ofLogError("Serial") << "Device Name may not corret "<< endl << "\t Use \"ls /dev/tty*\" to check your available rs232 device";
+			}
+			timeConunt = ofGetElapsedTimeMillis();
+			
+		}
+	}
 }
 
 //--------------------------------------------------------------
@@ -112,7 +152,7 @@ void testApp::keyPressed(int key){
 void testApp::parseCue(int cue)
 {
 	initClient();
-//	keyPressed(OF_KEY_RETURN);
+	//	keyPressed(OF_KEY_RETURN);
 	if(xml.pushTag("CUES"))
 	{
 		if(xml.pushTag("CUE",cue))

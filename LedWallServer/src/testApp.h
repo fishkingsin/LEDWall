@@ -33,4 +33,9 @@ class testApp : public ofBaseApp{
 	void parseCue(int cue);
 	void  initClient();
 	bool bDebug;
+	ofSerial serial;
+	bool bSerialInited;
+	int timeConunt ;
+	string deviceName;
+	int baudrate;
 };

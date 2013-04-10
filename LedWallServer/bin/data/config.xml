@@ -1,4 +1,9 @@
 <DATA>
+    <SERIAL>
+        <NAME>/dev/tty.usbserial</NAME><!--Mac osx-->
+        <!--/dev/ttyUSB0 for linux--> 
+        <BAUDRATE>9600</BAUDRATE>
+    </SERIAL>
     <DEVICE>
         <HOST>127.0.0.1</HOST>
         <PORT>2838</PORT>
