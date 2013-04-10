@@ -13,7 +13,7 @@ void testApp::setup(){
 		
 	}
 	receiver.setup(port);
-	ofSetLogLevel(OF_LOG_VERBOSE);
+	ofSetLogLevel(OF_LOG_NOTICE);
 	ofBackground(0);
     ofSetFrameRate(60);
 	ofEnableAlphaBlending();
@@ -94,7 +94,9 @@ void testApp::update(){
 		}
 		
 		else if(m.getAddress() == "/settings/debug"){
+
 			bool isDebug = m.getArgAsInt32(0);
+			ofLogWarning("isLoop") << isDebug;
 			ofSetLogLevel((isDebug)?OF_LOG_VERBOSE:OF_LOG_NOTICE);
 		}
 		else{
@@ -175,9 +177,9 @@ void testApp::draw(){
 		if(led!=NULL)
 		{
 			ofPushMatrix();
-			ofScale(5,5);
-			led->renderBuffer.draw(20,10);
-			led->encodedBuffer.draw(20,20);
+
+			led->renderBuffer.draw(0,0,ofGetWidth(),5);
+			led->encodedBuffer.draw(0,5,ofGetWidth(),5);
 			ofPopMatrix();
 		}
 	}
