@@ -40,21 +40,31 @@
                 <ID>4</ID> -->
             </DEVICES>
             <DURATION>30</DURATION>
+            <LOOP>0</LOOP>
         </CUE>
         <CUE>
+            <!--LOOP-->
             <FILE>./rainbow/</FILE>
             <TRANSITION_DURATION>1</TRANSITION_DURATION>
             <EASING>0</EASING>
             <DEVICES>
                 <ID>0</ID>
                 <ID>1</ID>
-                <!-- <ID>1</ID>
-                <ID>2</ID>
-                <ID>3</ID>
-                <ID>4</ID> -->
             </DEVICES>
             <DURATION>2</DURATION>
             <LOOP>1</LOOP>
+        </CUE>
+        <CUE>
+            <!--NO LOOP-->
+            <FILE>./rainbow/</FILE>
+            <TRANSITION_DURATION>1</TRANSITION_DURATION>
+            <EASING>0</EASING>
+            <DEVICES>
+                <ID>0</ID>
+                <ID>1</ID>
+            </DEVICES>
+            <DURATION>2</DURATION>
+            <LOOP>0</LOOP>
         </CUE>
         <CUE>
         </CUE>

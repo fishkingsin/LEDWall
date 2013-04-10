@@ -88,6 +88,7 @@ void testApp::update(){
 			ofLogVerbose("Animation") << animationDur;
 			sequenceTime[next].setDuration(animationDur);
 			isLoop = m.getArgAsInt32(4);
+			ofLogVerbose("isLoop") << isLoop;
 			sequenceTime[next].setRepeatType( (isLoop)?LOOP:PLAY_ONCE );
 			sequenceTime[next].setCurve(LINEAR);
 		}

@@ -85,6 +85,9 @@ void testApp::keyPressed(int key){
 		case '2':
 			parseCue(1);
 			break;
+		case '3':
+			parseCue(1);
+			break;
 		case 'd':
 		{
 			bDebug = !bDebug;
