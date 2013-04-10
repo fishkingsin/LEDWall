@@ -38,7 +38,7 @@ void testApp::exit()
 }
 //--------------------------------------------------------------
 void testApp::update(){
-	
+	float dt = 1.0f / ofGetFrameRate();
 	// check for waiting messages
 	while(receiver.hasWaitingMessages()){
 		// get the next message
@@ -54,6 +54,9 @@ void testApp::update(){
 			led = new ofxLEDsLPD8806(numLED);
 			ofLogNotice("OSC") << " Set LED length as " << numLED;
 			}
+		}
+		if(m.getAddress() == "/settings/timecode"){
+			dt = m.getArgAsFloat(0);
 		}
 		else if(m.getAddress() == "/settings/framerate"){
 			framerate = m.getArgAsInt32(0);
@@ -126,7 +129,7 @@ void testApp::update(){
 		}
 	}
 	
-	float dt = 1.0f / ofGetFrameRate();
+	
 	animation.update(dt);
 	sequenceTime[0].update(dt);
 	sequenceTime[1].update(dt);

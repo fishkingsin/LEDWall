@@ -58,6 +58,19 @@ void testApp::setup(){
 
 //--------------------------------------------------------------
 void testApp::update(){
+	ofxOscBundle b;
+	
+	ofxOscMessage m;
+	m.setAddress("/settings/timecode");
+	
+	m.addFloatArg(1.0f / ofGetFrameRate());
+	b.addMessage(m);
+
+	for(int i = 0 ; i < numDevice ; i++)
+	{
+			
+			sender[i].sendBundle(b);
+	}
 	if(bSerialInited)
 	{
 		if(serial.available())
