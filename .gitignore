@@ -1,3 +1,5 @@
 *.app
 *.xcuserdata
 *.xcuserstate
+
+*.png
