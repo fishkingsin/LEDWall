@@ -28,6 +28,7 @@ check : https://github.com/fishkingsin/elinux-lpd8806 for more detail
 Dependencies
 ------------
 ofxOsc
+
 ofxXmlSettings
 
 [ofxImageSequence](https://github.com/Flightphase/ofxImageSequence)
