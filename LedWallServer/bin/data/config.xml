@@ -4,8 +4,13 @@
         <!--/dev/ttyUSB0 for linux--> 
         <BAUDRATE>9600</BAUDRATE>
     </SERIAL>
-     <DEVICE>
+    <DEVICE>
         <HOST>127.0.0.1</HOST>
+        <PORT>2838</PORT>
+        <LENGTH>80</LENGTH>
+    </DEVICE>
+     <DEVICE>
+        <HOST>192.168.6.83</HOST>
         <PORT>2838</PORT>
         <LENGTH>80</LENGTH>
     </DEVICE>
@@ -14,7 +19,7 @@
         <PORT>2838</PORT>
         <LENGTH>160</LENGTH>
     </DEVICE>  -->
-<!--     <DEVICE>
+    <DEVICE>
         <HOST>192.168.6.86</HOST>
         <PORT>2838</PORT>
         <LENGTH>80</LENGTH>
@@ -23,7 +28,7 @@
         <HOST>192.168.6.85</HOST>
         <PORT>2838</PORT>
         <LENGTH>80</LENGTH>
-    </DEVICE> --><!--
+    </DEVICE><!--
     <DEVICE>
         <HOST>127.0.0.1</HOST>
         <PORT>2838</PORT>

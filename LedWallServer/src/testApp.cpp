@@ -85,17 +85,17 @@ void testApp::update(){
 	}
 	else
 	{
-		int diff = ofGetElapsedTimeMillis() - timeConunt;
-		if(diff>5000)
-		{
-			bSerialInited = serial.setup(deviceName, baudrate);
-			if(!bSerialInited)
-			{
-				ofLogError("Serial") << "Device Name may not corret "<< endl << "\t Use \"ls /dev/tty*\" to check your available rs232 device";
-			}
-			timeConunt = ofGetElapsedTimeMillis();
-			
-		}
+//		int diff = ofGetElapsedTimeMillis() - timeConunt;
+//		if(diff>5000)
+//		{
+//			bSerialInited = serial.setup(deviceName, baudrate);
+//			if(!bSerialInited)
+//			{
+//				ofLogError("Serial") << "Device Name may not corret "<< endl << "\t Use \"ls /dev/tty*\" to check your available rs232 device";
+//			}
+//			timeConunt = ofGetElapsedTimeMillis();
+//			
+//		}
 	}
 }
 

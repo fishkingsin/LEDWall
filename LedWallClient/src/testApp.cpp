@@ -38,7 +38,7 @@ void testApp::exit()
 }
 //--------------------------------------------------------------
 void testApp::update(){
-	float dt = 1.0f / ofGetFrameRate();
+	float dt = 0;//1.0f / ofGetFrameRate();
 	// check for waiting messages
 	while(receiver.hasWaitingMessages()){
 		// get the next message
@@ -55,7 +55,7 @@ void testApp::update(){
 			ofLogNotice("OSC") << " Set LED length as " << numLED;
 			}
 		}
-		if(m.getAddress() == "/settings/timecode"){
+		else if(m.getAddress() == "/settings/timecode"){
 			dt = m.getArgAsFloat(0);
 		}
 		else if(m.getAddress() == "/settings/framerate"){
@@ -86,7 +86,7 @@ void testApp::update(){
 
 			animation.setCurve((AnimCurve) (EASE_IN_EASE_OUT +  m.getArgAsInt32(2) ));
 			
-			sequenceTime[next].animateFromTo( 0, 1 );
+			sequenceTime[next].animateFromTo( 0, 1000 );
 			int animationDur = m.getArgAsInt32(3);
 			ofLogVerbose("Animation") << animationDur;
 			sequenceTime[next].setDuration(animationDur);
@@ -133,6 +133,8 @@ void testApp::update(){
 	animation.update(dt);
 	sequenceTime[0].update(dt);
 	sequenceTime[1].update(dt);
+	ofLogVerbose() <<"sequenceTime :"<< sequenceTime[0].getCurrentValue();
+		ofLogVerbose() <<"sequenceTime :"<< sequenceTime[1].getCurrentValue();
 	if(led!=NULL)
 	{
 		led->renderBuffer.begin();
@@ -141,12 +143,12 @@ void testApp::update(){
 		ofSetColor(255,255);
 		int width = led->renderBuffer.getWidth();
 		int height = led->renderBuffer.getHeight();
-		if(sequence[current].isLoaded())sequence[current].getFrameAtPercent(sequenceTime[current].getCurrentValue())->draw(0,0,width,height);
+		if(sequence[current].isLoaded())sequence[current].getFrameAtPercent(sequenceTime[current].getCurrentValue()/1000)->draw(0,0,width,height);
 		ofPopStyle();
 		ofPushStyle();
 		
 		ofSetColor(255,animation.getCurrentValue());
-		if(sequence[next].isLoaded())sequence[next].getFrameAtPercent(sequenceTime[next].getCurrentValue())->draw(0,0,width,height);
+		if(sequence[next].isLoaded())sequence[next].getFrameAtPercent(sequenceTime[next].getCurrentValue()/1000)->draw(0,0,width,height);
 		ofPopStyle();
 		led->renderBuffer.end();
 		led->encode();
