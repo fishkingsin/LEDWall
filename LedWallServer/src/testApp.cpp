@@ -54,6 +54,7 @@ void testApp::setup(){
 	
 	timeConunt = 0;
 	keyPressed(OF_KEY_RETURN);
+	ofSetFrameRate(25);
 }
 
 //--------------------------------------------------------------
