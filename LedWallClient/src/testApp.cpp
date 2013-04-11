@@ -38,7 +38,7 @@ void testApp::exit()
 }
 //--------------------------------------------------------------
 void testApp::update(){
-	float dt = 0;//1.0f / ofGetFrameRate();
+	float  dt = 0;//1.0f / ofGetFrameRate();
 	// check for waiting messages
 	while(receiver.hasWaitingMessages()){
 		// get the next message
@@ -55,8 +55,13 @@ void testApp::update(){
 			ofLogNotice("OSC") << " Set LED length as " << numLED;
 			}
 		}
-		else if(m.getAddress() == "/settings/timecode"){
-			dt = m.getArgAsFloat(0);
+		else if(m.getAddress() == "/settings/lastFrameTime"){
+			int currentFrameTime = m.getArgAsInt32(0);
+			ofLogVerbose()<<"currentFrameTime " << currentFrameTime;
+			dt =  (currentFrameTime - lastFrameTime)/ofGetFrameRate();
+			lastFrameTime = currentFrameTime;
+			
+			
 		}
 		else if(m.getAddress() == "/settings/framerate"){
 			framerate = m.getArgAsInt32(0);
@@ -133,8 +138,8 @@ void testApp::update(){
 	animation.update(dt);
 	sequenceTime[0].update(dt);
 	sequenceTime[1].update(dt);
-	ofLogVerbose() <<"sequenceTime :"<< sequenceTime[0].getCurrentValue();
-		ofLogVerbose() <<"sequenceTime :"<< sequenceTime[1].getCurrentValue();
+	ofLogVerbose() <<"sequenceTime :"<< sequenceTime[next].getCurrentValue();
+
 	if(led!=NULL)
 	{
 		led->renderBuffer.begin();

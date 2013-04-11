@@ -39,4 +39,5 @@ class testApp : public ofBaseApp{
 	int current,next;
 	int numLED;
 	int framerate;
+	int lastFrameTime;
 };

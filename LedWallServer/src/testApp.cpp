@@ -62,9 +62,9 @@ void testApp::update(){
 	ofxOscBundle b;
 	
 	ofxOscMessage m;
-	m.setAddress("/settings/timecode");
+	m.setAddress("/settings/lastFrameTime");
 	
-	m.addFloatArg(1.0f / ofGetFrameRate());
+	m.addIntArg(ofGetFrameNum());
 	b.addMessage(m);
 
 	for(int i = 0 ; i < numDevice ; i++)
