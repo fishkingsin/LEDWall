@@ -167,6 +167,7 @@ void testApp::parseCue(int cue)
 {
 	initClient();
 	//	keyPressed(OF_KEY_RETURN);
+	int framerate = xml.getValue("FRAMERATE", 12);
 	if(xml.pushTag("CUES"))
 	{
 		if(xml.pushTag("CUE",cue))
@@ -185,7 +186,12 @@ void testApp::parseCue(int cue)
 			m.addIntArg(xml.getValue("DURATION", 0));
 			m.addIntArg(xml.getValue("LOOP", 0));
 			b.addMessage(m);
-			;
+			
+			ofxOscMessage m2;
+			m2.setAddress("/settings/framerate");
+			m2.addIntArg(framerate);
+			b.addMessage(m2);
+			
 			if(xml.pushTag("DEVICES"))
 			{
 				int numTag = xml.getNumTags("ID");

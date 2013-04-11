@@ -25,7 +25,7 @@ void testApp::setup(){
 	current = 0;
 	next = 1;
 	framerate = 12;
-	
+	lastFrameTime = 0;
 }
 void testApp::exit()
 {
@@ -58,12 +58,13 @@ void testApp::update(){
 		else if(m.getAddress() == "/settings/lastFrameTime"){
 			int currentFrameTime = m.getArgAsInt32(0);
 			ofLogVerbose()<<"currentFrameTime " << currentFrameTime;
-			dt =  (currentFrameTime - lastFrameTime)/ofGetFrameRate();
+			dt =  (currentFrameTime - lastFrameTime)/(framerate*1.0f);
 			lastFrameTime = currentFrameTime;
 			
 			
 		}
 		else if(m.getAddress() == "/settings/framerate"){
+			ofLogNotice()<<"framerate " << framerate;
 			framerate = m.getArgAsInt32(0);
 			
 		}

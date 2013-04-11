@@ -36,6 +36,7 @@
         <HOST>127.0.0.1</HOST>
         <PORT>2838</PORT>
     </DEVICE> -->
+    <FRAMERATE>12</FRAMERATE>
     <CUES>
         <CUE>
             <FILE>./rainbow2/</FILE>
@@ -63,7 +64,7 @@
                 <ID>1</ID>
                 <ID>2</ID>
             </DEVICES>
-            <DURATION>15</DURATION>
+            <DURATION>2</DURATION>
             <LOOP>1</LOOP>
         </CUE>
         <CUE>
