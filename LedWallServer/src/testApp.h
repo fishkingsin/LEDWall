@@ -6,9 +6,26 @@
 #include "ofxAnimatableFloat.h"
 class Cue{
 public:
-	string folder;
-	int duration;
-	AnimCurve curve;
+	Cue()
+	{
+		current = 0;
+		next = 1;
+		animatable = new ofxAnimatableFloat[2];
+	}
+	void update(float dt)
+	{
+		
+		animatable[current].update(dt);
+		animatable[next].update(dt);
+	}
+	void swap()
+	{
+		int prev = current;
+		current = next;
+		next = prev;
+	}
+	int next,current;
+ofxAnimatableFloat *animatable;
 };
 
 class testApp : public ofBaseApp{
@@ -28,10 +45,11 @@ class testApp : public ofBaseApp{
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
 	ofxOscSender *sender;
-	ofxAnimatableFloat *animatable;
+	Cue *cue;
+	
 	ofxXmlSettings xml;
 	int numDevice;
-	void parseCue(int cue);
+	void parseCue(int _cue);
 	void  initClient();
 	bool bDebug;
 	ofSerial serial;

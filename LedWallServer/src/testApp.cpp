@@ -23,15 +23,17 @@ void testApp::setup(){
 	ofSetLogLevel(OF_LOG_VERBOSE);
 	deviceName = "/dev/ttyUSB0" ;
 	baudrate = 9600;
+
 	if(xml.loadFile("config.xml"))
 	{
 		xml.pushTag("DATA");
 		numDevice = xml.getNumTags("DEVICE");
 		ofLogVerbose("numDevice") << numDevice;
 		sender = new ofxOscSender[numDevice];
-		animatable = new ofxAnimatableFloat[numDevice];
+		cue = new Cue[numDevice];
 		for(int i = 0 ; i < numDevice ; i++)
 		{
+			
 			if(xml.pushTag("DEVICE",i))
 			{
 				sender[i].setup(xml.getValue("HOST", "127.0.0.1"), xml.getValue("PORT", 2838));
@@ -65,13 +67,15 @@ void testApp::update(){
 	float dt = 1.0f/ofGetFrameRate();
 	for(int i = 0 ; i < numDevice ; i++)
 	{
-		animatable[i].update(dt);
+		cue[i].update(dt);
 		ofxOscBundle b;
 		
 		ofxOscMessage m;
 		m.setAddress("/settings/lastFrameTime");
-		
-		m.addFloatArg(animatable[i].getCurrentValue());
+		//this is tricky you end to invert the next cue point and curent cue point here
+		m.addFloatArg(cue[i].animatable[cue[i].next].getCurrentValue());		
+		m.addFloatArg(cue[i].animatable[cue[i].current].getCurrentValue());
+
 		b.addMessage(m);
 			sender[i].sendBundle(b);
 	}
@@ -166,15 +170,16 @@ void testApp::keyPressed(int key){
 			
 	}
 }
-void testApp::parseCue(int cue)
+void testApp::parseCue(int _cue)
 {
 	initClient();
 	//	keyPressed(OF_KEY_RETURN);
 	int framerate = xml.getValue("FRAMERATE", 12);
 	if(xml.pushTag("CUES"))
 	{
-		if(xml.pushTag("CUE",cue))
+		if(xml.pushTag("CUE",_cue))
 		{
+			
 			ofxOscBundle b;
 			
 			ofxOscMessage m;
@@ -205,11 +210,11 @@ void testApp::parseCue(int cue)
 					int id = xml.getValue("ID",0,i);
 					if(id<numDevice && id>-1)
 					{
-						
-						animatable[id].animateFromTo( 0, 1 );
-						animatable[id].setDuration(animationDur);
-						animatable[id].setRepeatType( (bLoop)?LOOP:PLAY_ONCE );
-						animatable[id].setCurve(LINEAR);
+						cue[id].swap();
+						cue[id].animatable[cue[id].current].animateFromTo( 0, 1 );
+						cue[id].animatable[cue[id].current].setDuration(animationDur);
+						cue[id].animatable[cue[id].current].setRepeatType( (bLoop)?LOOP:PLAY_ONCE );
+						cue[id].animatable[cue[id].current].setCurve(LINEAR);
 
 						sender[id].sendBundle(b);
 						ofLogVerbose("Device "+ofToString(id)) << "sent";

@@ -57,13 +57,7 @@ void testApp::update(){
 		}
 		else if(m.getAddress() == "/settings/lastFrameTime"){
 			sequenceTime[current] = m.getArgAsFloat(0);
-			sequenceTime[next] = sequenceTime[current];//m.getArgAsFloat(1);
-
-//				int currentFrameTime = m.getArgAsInt32(0);
-				ofLogVerbose()<<"sequenceTime[next]  " << sequenceTime[next] ;
-//				dt =  (currentFrameTime - lastFrameTime)/(framerate*1.0f);
-//				lastFrameTime = currentFrameTime;
-			
+			sequenceTime[next] = m.getArgAsFloat(1);			
 		}
 		else if(m.getAddress() == "/settings/framerate"){
 
