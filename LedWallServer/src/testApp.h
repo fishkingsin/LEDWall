@@ -3,7 +3,7 @@
 #include "ofMain.h"
 #include "ofxOsc.h"
 #include "ofxXmlSettings.h"
-#include "ofxAnimatable.h"
+#include "ofxAnimatableFloat.h"
 class Cue{
 public:
 	string folder;
@@ -28,6 +28,7 @@ class testApp : public ofBaseApp{
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
 	ofxOscSender *sender;
+	ofxAnimatableFloat *animatable;
 	ofxXmlSettings xml;
 	int numDevice;
 	void parseCue(int cue);
@@ -38,4 +39,5 @@ class testApp : public ofBaseApp{
 	int timeConunt ;
 	string deviceName;
 	int baudrate;
+	
 };

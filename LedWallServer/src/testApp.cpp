@@ -29,11 +29,13 @@ void testApp::setup(){
 		numDevice = xml.getNumTags("DEVICE");
 		ofLogVerbose("numDevice") << numDevice;
 		sender = new ofxOscSender[numDevice];
+		animatable = new ofxAnimatableFloat[numDevice];
 		for(int i = 0 ; i < numDevice ; i++)
 		{
 			if(xml.pushTag("DEVICE",i))
 			{
 				sender[i].setup(xml.getValue("HOST", "127.0.0.1"), xml.getValue("PORT", 2838));
+				
 				xml.popTag();
 			}
 			if(xml.pushTag("SERIAL"))
@@ -59,17 +61,18 @@ void testApp::setup(){
 
 //--------------------------------------------------------------
 void testApp::update(){
-	ofxOscBundle b;
 	
-	ofxOscMessage m;
-	m.setAddress("/settings/lastFrameTime");
-	
-	m.addIntArg(ofGetFrameNum());
-	b.addMessage(m);
-
+	float dt = 1.0f/ofGetFrameRate();
 	for(int i = 0 ; i < numDevice ; i++)
 	{
-			
+		animatable[i].update(dt);
+		ofxOscBundle b;
+		
+		ofxOscMessage m;
+		m.setAddress("/settings/lastFrameTime");
+		
+		m.addFloatArg(animatable[i].getCurrentValue());
+		b.addMessage(m);
 			sender[i].sendBundle(b);
 	}
 	if(bSerialInited)
@@ -183,8 +186,10 @@ void testApp::parseCue(int cue)
 			m.addStringArg(xml.getValue("FILE", "sequence"));
 			m.addIntArg(xml.getValue("TRANSITION_DURATION", 1));
 			m.addIntArg(xml.getValue("EASING", 0));
-			m.addIntArg(xml.getValue("DURATION", 0));
-			m.addIntArg(xml.getValue("LOOP", 0));
+			float animationDur = xml.getValue("DURATION", 0);
+			m.addIntArg(animationDur);
+			bool bLoop = xml.getValue("LOOP", 0);
+			m.addIntArg(bLoop);
 			b.addMessage(m);
 			
 			ofxOscMessage m2;
@@ -200,6 +205,12 @@ void testApp::parseCue(int cue)
 					int id = xml.getValue("ID",0,i);
 					if(id<numDevice && id>-1)
 					{
+						
+						animatable[id].animateFromTo( 0, 1 );
+						animatable[id].setDuration(animationDur);
+						animatable[id].setRepeatType( (bLoop)?LOOP:PLAY_ONCE );
+						animatable[id].setCurve(LINEAR);
+
 						sender[id].sendBundle(b);
 						ofLogVerbose("Device "+ofToString(id)) << "sent";
 					}

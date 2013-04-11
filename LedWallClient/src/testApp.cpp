@@ -38,7 +38,7 @@ void testApp::exit()
 }
 //--------------------------------------------------------------
 void testApp::update(){
-	float  dt = 0;//1.0f / ofGetFrameRate();
+	float  dt = 1.0f / ofGetFrameRate();
 	// check for waiting messages
 	while(receiver.hasWaitingMessages()){
 		// get the next message
@@ -56,17 +56,19 @@ void testApp::update(){
 			}
 		}
 		else if(m.getAddress() == "/settings/lastFrameTime"){
-			int currentFrameTime = m.getArgAsInt32(0);
-			ofLogVerbose()<<"currentFrameTime " << currentFrameTime;
-			dt =  (currentFrameTime - lastFrameTime)/(framerate*1.0f);
-			lastFrameTime = currentFrameTime;
-			
+			sequenceTime[current] = m.getArgAsFloat(0);
+//			sequenceTime[next] = m.getArgAsFloat(1);
+
+//				int currentFrameTime = m.getArgAsInt32(0);
+				ofLogVerbose()<<"sequenceTime[next]  " << sequenceTime[next] ;
+//				dt =  (currentFrameTime - lastFrameTime)/(framerate*1.0f);
+//				lastFrameTime = currentFrameTime;
 			
 		}
 		else if(m.getAddress() == "/settings/framerate"){
-			ofLogNotice()<<"framerate " << framerate;
+
 			framerate = m.getArgAsInt32(0);
-			
+			ofLogNotice()<<"framerate " << framerate;
 		}
 		else if(m.getAddress() == "/led/cue/"){
 
@@ -92,14 +94,14 @@ void testApp::update(){
 
 			animation.setCurve((AnimCurve) (EASE_IN_EASE_OUT +  m.getArgAsInt32(2) ));
 			
-			sequenceTime[next].animateFromTo( 0, 1000 );
+//			sequenceTime[next].animateFromTo( 0, 1 );
 			int animationDur = m.getArgAsInt32(3);
 			ofLogVerbose("Animation") << animationDur;
-			sequenceTime[next].setDuration(animationDur);
+//			sequenceTime[next].setDuration(animationDur);
 			isLoop = m.getArgAsInt32(4);
 			ofLogVerbose("isLoop") << isLoop;
-			sequenceTime[next].setRepeatType( (isLoop)?LOOP:PLAY_ONCE );
-			sequenceTime[next].setCurve(LINEAR);
+//			sequenceTime[next].setRepeatType( (isLoop)?LOOP:PLAY_ONCE );
+//			sequenceTime[next].setCurve(LINEAR);
 		}
 		
 		else if(m.getAddress() == "/settings/debug"){
@@ -137,9 +139,9 @@ void testApp::update(){
 	
 	
 	animation.update(dt);
-	sequenceTime[0].update(dt);
-	sequenceTime[1].update(dt);
-	ofLogVerbose() <<"sequenceTime :"<< sequenceTime[next].getCurrentValue();
+//	sequenceTime[0].update(dt);
+//	sequenceTime[1].update(dt);
+//	ofLogVerbose() <<"sequenceTime :"<< sequenceTime[next].getCurrentValue();
 
 	if(led!=NULL)
 	{
@@ -149,12 +151,12 @@ void testApp::update(){
 		ofSetColor(255,255);
 		int width = led->renderBuffer.getWidth();
 		int height = led->renderBuffer.getHeight();
-		if(sequence[current].isLoaded())sequence[current].getFrameAtPercent(sequenceTime[current].getCurrentValue()/1000)->draw(0,0,width,height);
+		if(sequence[current].isLoaded())sequence[current].getFrameAtPercent(sequenceTime[current])->draw(0,0,width,height);
 		ofPopStyle();
 		ofPushStyle();
 		
 		ofSetColor(255,animation.getCurrentValue());
-		if(sequence[next].isLoaded())sequence[next].getFrameAtPercent(sequenceTime[next].getCurrentValue()/1000)->draw(0,0,width,height);
+		if(sequence[next].isLoaded())sequence[next].getFrameAtPercent(sequenceTime[next])->draw(0,0,width,height);
 		ofPopStyle();
 		led->renderBuffer.end();
 		led->encode();

@@ -31,7 +31,8 @@ class testApp : public ofBaseApp{
 	ofxLEDsLPD8806 *led;
 	ofxLPD8806 spi;
 	ofxAnimatableFloat animation;
-	ofxAnimatableFloat sequenceTime[2];
+//	ofxAnimatableFloat sequenceTime[2];
+	float sequenceTime[2];
 	ofxImageSequence sequence[2];
 	
 	bool isLoop;
@@ -40,4 +41,5 @@ class testApp : public ofBaseApp{
 	int numLED;
 	int framerate;
 	int lastFrameTime;
+//	bool bUpdate;
 };
